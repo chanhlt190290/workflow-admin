@@ -5,6 +5,7 @@
  */
 package workflow.admin.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -23,7 +24,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,6 +36,20 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "transition")
 @EntityListeners(AuditingEntityListener.class)
 public class Transition implements Serializable {
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     /**
      * @return the activities
@@ -56,33 +70,33 @@ public class Transition implements Serializable {
     /**
      * @return the processId
      */
-    public Integer getProcessId() {
+    public Long getProcessId() {
         return processId;
     }
 
     /**
      * @param process the processId to set
      */
-    public void setProcessId(Integer process) {
+    public void setProcessId(Long process) {
         this.processId = process;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "process_id")
-    @NotNull
-    private Integer processId;
+    private Long processId;
 
     @JoinColumn(name = "current_state_id")
-    @NotNull
-    private Integer currentStateId;
+    private Long currentStateId;
 
     @JoinColumn(name = "next_state_id")
-    @NotNull
-    private Integer nextStateId;
+    private Long nextStateId;
+    
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -90,8 +104,7 @@ public class Transition implements Serializable {
     private Date createdAt;
 
     @Column(name = "created_by")
-    @NotNull
-    private Integer createdBy;
+    private Long createdBy;
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -99,64 +112,65 @@ public class Transition implements Serializable {
     private Date updatedAt;
 
     @Column(name = "updated_by")
-    @NotNull
-    private Integer updatedBy;
+    private Long updatedBy;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "transition_action",
             inverseJoinColumns = {
                 @JoinColumn(name = "action_id", referencedColumnName = "id")},
             joinColumns = {
                 @JoinColumn(name = "transition_id", referencedColumnName = "id")})
+    @JsonIgnore
     private Set<Action> actions = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "transition_activity",
             inverseJoinColumns = {
                 @JoinColumn(name = "activity_id", referencedColumnName = "id")},
             joinColumns = {
                 @JoinColumn(name = "transition_id", referencedColumnName = "id")})
+    @JsonIgnore
     private Set<Activity> activities = new HashSet<>();
 
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * @return the currentStateId
      */
-    public Integer getCurrentStateId() {
+    public Long getCurrentStateId() {
         return currentStateId;
     }
 
     /**
      * @param currentStateId the currentStateId to set
      */
-    public void setCurrentStateId(Integer currentStateId) {
+    public void setCurrentStateId(Long currentStateId) {
         this.currentStateId = currentStateId;
     }
 
     /**
      * @return the nextStateId
      */
-    public Integer getNextStateId() {
+    public Long getNextStateId() {
         return nextStateId;
     }
 
     /**
      * @param nextStateId the nextStateId to set
      */
-    public void setNextStateId(Integer nextStateId) {
+    public void setNextStateId(Long nextStateId) {
         this.nextStateId = nextStateId;
     }
 
@@ -191,14 +205,14 @@ public class Transition implements Serializable {
     /**
      * @return the createdBy
      */
-    public Integer getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
     /**
      * @param createdBy the createdBy to set
      */
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -219,14 +233,14 @@ public class Transition implements Serializable {
     /**
      * @return the updatedBy
      */
-    public Integer getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updatedBy;
     }
 
     /**
      * @param updatedBy the updatedBy to set
      */
-    public void setUpdatedBy(Integer updatedBy) {
+    public void setUpdatedBy(Long updatedBy) {
         this.updatedBy = updatedBy;
     }
 

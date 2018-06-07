@@ -20,7 +20,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -47,28 +46,28 @@ public class Target implements Serializable {
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * @return the targetTypeId
      */
-    public Integer getTargetTypeId() {
+    public Long getTargetTypeId() {
         return targetTypeId;
     }
 
     /**
      * @param targetTypeId the targetTypeId to set
      */
-    public void setTargetTypeId(Integer targetTypeId) {
+    public void setTargetTypeId(Long targetTypeId) {
         this.targetTypeId = targetTypeId;
     }
 
@@ -89,28 +88,28 @@ public class Target implements Serializable {
     /**
      * @return the userId
      */
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
     /**
      * @param userId the userId to set
      */
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
     /**
      * @return the userGroupId
      */
-    public Integer getUserGroupId() {
+    public Long getUserGroupId() {
         return userGroupId;
     }
 
     /**
      * @param userGroupId the userGroupId to set
      */
-    public void setUserGroupId(Integer userGroupId) {
+    public void setUserGroupId(Long userGroupId) {
         this.userGroupId = userGroupId;
     }
 
@@ -119,24 +118,21 @@ public class Target implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonIgnore
-    private Integer id;
+    private Long id;
 
     @Column(name = "target_type_id")
-    @NotNull
-    private Integer targetTypeId;
+    private Long targetTypeId;
 
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @Column(name = "user_group_id")
-    private Integer userGroupId;
+    private Long userGroupId;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "action_target",
             joinColumns = {
                 @JoinColumn(name = "target_id", referencedColumnName = "id")},

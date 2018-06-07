@@ -24,7 +24,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -57,14 +56,14 @@ public class State implements Serializable {
     /**
      * @return the processId
      */
-    public Integer getProcessId() {
+    public Long getProcessId() {
         return processId;
     }
 
     /**
      * @param process the processId to set
      */
-    public void setProcessId(Integer process) {
+    public void setProcessId(Long process) {
         this.processId = process;
     }
 
@@ -99,21 +98,15 @@ public class State implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonIgnore
-    private Integer id;
+    private Long id;
 
     @Column(name = "state_type_id")
-    @NotNull
-    @JsonIgnore
-    private Integer stateTypeId;
+    private Long stateTypeId;
 
     @Column(name = "process_id")
-    @NotNull
-    @JsonIgnore
-    private Integer processId;
+    private Long processId;
 
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
@@ -122,26 +115,20 @@ public class State implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    @JsonIgnore
     private Date createdAt;
 
     @Column(name = "created_by")
-    @NotNull
-    @JsonIgnore
-    private Integer createdBy;
+    private Long createdBy;
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    @JsonIgnore
     private Date updatedAt;
 
     @Column(name = "updated_by")
-    @NotNull
-    @JsonIgnore
-    private Integer updatedBy;
+    private Long updatedBy;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "state_activity",
             inverseJoinColumns = {
                 @JoinColumn(name = "activity_id", referencedColumnName = "id")},
@@ -167,14 +154,14 @@ public class State implements Serializable {
     /**
      * @return the createdBy
      */
-    public Integer getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
     /**
      * @param createdBy the createdBy to set
      */
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -195,42 +182,42 @@ public class State implements Serializable {
     /**
      * @return the updatedBy
      */
-    public Integer getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updatedBy;
     }
 
     /**
      * @param updatedBy the updatedBy to set
      */
-    public void setUpdatedBy(Integer updatedBy) {
+    public void setUpdatedBy(Long updatedBy) {
         this.updatedBy = updatedBy;
     }
 
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     /**
      * @return the stateTypeId
      */
-    public Integer getStateTypeId() {
+    public Long getStateTypeId() {
         return stateTypeId;
     }
 
     /**
      * @param stateTypeId the stateTypeId to set
      */
-    public void setStateTypeId(Integer stateTypeId) {
+    public void setStateTypeId(Long stateTypeId) {
         this.stateTypeId = stateTypeId;
     }
 

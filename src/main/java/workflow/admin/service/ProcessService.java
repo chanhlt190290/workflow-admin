@@ -5,6 +5,7 @@
  */
 package workflow.admin.service;
 
+import java.util.List;
 import workflow.admin.model.Process;
 
 /**
@@ -13,5 +14,8 @@ import workflow.admin.model.Process;
  */
 public interface ProcessService {
 
-    Process create(Process process);
+    Process get(long processId);
+    List<Process> getAll(int page, int count);
+	Process create(String name, long createdBy, String description);
+	Process update(long processId, String name, long updatedBy, String description);
 }

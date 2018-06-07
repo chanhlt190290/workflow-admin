@@ -24,7 +24,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -69,14 +68,14 @@ public class Activity implements Serializable {
     /**
      * @return the createdBy
      */
-    public Integer getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
     /**
      * @param createdBy the createdBy to set
      */
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -97,14 +96,14 @@ public class Activity implements Serializable {
     /**
      * @return the updatedBy
      */
-    public Integer getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updatedBy;
     }
 
     /**
      * @param updatedBy the updatedBy to set
      */
-    public void setUpdatedBy(Integer updatedBy) {
+    public void setUpdatedBy(Long updatedBy) {
         this.updatedBy = updatedBy;
     }
 
@@ -127,20 +126,15 @@ public class Activity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    @JsonIgnore
-    private Integer id;
+    private Long id;
 
     @Column(name = "activity_type_id")
-    @NotNull
-    private Integer activityTypeId;
-
+    private Long activityTypeId;
+    
     @Column(name = "process_id")
-    @NotNull
-    @JsonIgnore
-    private Integer processId;
-
+    private Long processId;
+    
     @Column(name = "name")
-    @NotNull
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
@@ -149,24 +143,18 @@ public class Activity implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    @JsonIgnore
     private Date createdAt;
 
     @Column(name = "created_by")
-    @NotNull
-    @JsonIgnore
-    private Integer createdBy;
+    private Long createdBy;
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
-    @JsonIgnore
     private Date updatedAt;
 
     @Column(name = "updated_by")
-    @NotNull
-    @JsonIgnore
-    private Integer updatedBy;
+    private Long updatedBy;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "transition_activity",
@@ -185,11 +173,11 @@ public class Activity implements Serializable {
                 @JoinColumn(name = "target_id", referencedColumnName = "id")})
     private Set<Target> targets = new HashSet<>();
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -212,28 +200,28 @@ public class Activity implements Serializable {
     /**
      * @return the activityTypeId
      */
-    public Integer getActivityTypeId() {
+    public Long getActivityTypeId() {
         return activityTypeId;
     }
 
     /**
      * @param activityTypeId the activityTypeId to set
      */
-    public void setActivityTypeId(Integer activityTypeId) {
+    public void setActivityTypeId(Long activityTypeId) {
         this.activityTypeId = activityTypeId;
     }
 
     /**
      * @return the processId
      */
-    public Integer getProcessId() {
+    public Long getProcessId() {
         return processId;
     }
 
     /**
      * @param processId the processId to set
      */
-    public void setProcessId(Integer processId) {
+    public void setProcessId(Long processId) {
         this.processId = processId;
     }
 }

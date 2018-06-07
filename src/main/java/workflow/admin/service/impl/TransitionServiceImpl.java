@@ -8,19 +8,19 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import workflow.admin.model.State;
-import workflow.admin.service.StateService;
+import workflow.admin.model.Transition;
+import workflow.admin.service.TransitionService;
 
 @Service
 @Transactional
-public class StateServiceImpl implements StateService {
+public class TransitionServiceImpl implements TransitionService {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public List<State> findByProcess(long processId) {
-        return em.createQuery("select s from State s where s.processId = :processId", State.class)
+    public List<Transition> findByProcess(long processId) {
+        return em.createQuery("select t from Transition t where t.processId = :processId", Transition.class)
                 .setParameter("processId", processId).getResultList();
     }
 

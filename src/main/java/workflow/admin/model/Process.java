@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -30,16 +29,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Process implements Serializable {
 
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     private static final long serialVersionUID = 4277037918733220692L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
-    @NotNull
     private String name;
+
+    @Column(name = "description", columnDefinition = "text")
+    private String description;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -47,8 +62,7 @@ public class Process implements Serializable {
     private Date createdAt;
 
     @Column(name = "created_by")
-    @NotNull
-    private Integer createdBy;
+    private Long createdBy;
 
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,20 +70,19 @@ public class Process implements Serializable {
     private Date updatedAt;
 
     @Column(name = "updated_by")
-    @NotNull
-    private Integer updatedBy;
+    private Long updatedBy;
 
     /**
      * @return the id
      */
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -104,14 +117,14 @@ public class Process implements Serializable {
     /**
      * @return the createdBy
      */
-    public Integer getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
     /**
      * @param createdBy the createdBy to set
      */
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -132,14 +145,14 @@ public class Process implements Serializable {
     /**
      * @return the updatedBy
      */
-    public Integer getUpdatedBy() {
+    public Long getUpdatedBy() {
         return updatedBy;
     }
 
     /**
      * @param updatedBy the updatedBy to set
      */
-    public void setUpdatedBy(Integer updatedBy) {
+    public void setUpdatedBy(Long updatedBy) {
         this.updatedBy = updatedBy;
     }
 }
