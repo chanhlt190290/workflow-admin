@@ -34,7 +34,6 @@ class Index extends Component {
   render() {
     return (
       <div>
-        <div><h1 className="text-center">Hello</h1></div>
         
       </div>
     );
